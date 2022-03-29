@@ -5,8 +5,56 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../reset.css">
-    <link rel="stylesheet" href="./styles.css">
     <title>gsap scrollTrigger</title>
+
+    <style>
+        .wrap {
+        width: 100%;
+        max-width: 1200px;
+        margin: 0 auto;
+        }
+
+        .side-scrolling-wrapper {
+        position: relative;
+        width: 100%;
+        height: auto;
+        display: block;
+        }
+
+        .side-scrolling-title {
+        padding: 100px 0 50px;
+        }
+
+        .container {
+        width: 500%;
+        height: 300px;
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 50px;
+        padding: 0px;
+        overflow: hidden;
+        }
+
+        .panel {
+        width: 300px;
+        height: 300px;
+        text-align: left;
+        color: white;
+        position: relative;
+        overflow: hidden;
+        }
+        .panel img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        }
+        .text {
+        width: 800px;
+        height: 300px;
+        margin: auto;
+        padding: 50px 0;
+        }
+    </style>
 </head>
 <body>
     <header>
@@ -161,5 +209,42 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.9.1/ScrollTrigger.min.js"></script>
     <script src="index.js"></script>
+    <script type="text/javascript">
+        gsap.registerPlugin(ScrollTrigger);
+
+        let sections = gsap.utils.toArray(".side-scrolling-wrapper .container .panel");
+
+        gsap.to(".side-scrolling-wrapper section", {
+            xPercent: -100 * (sections.length - 3),
+            scrollTrigger: {
+                trigger: ".side-scrolling-wrapper",
+                pin: true,
+                markers: true,
+                start: "top top",
+                scrub: 1,
+                end: () => "+=" + (document.querySelector(".wrap1 .container").offsetWidth / 5)
+            }
+        });
+
+        gsap.to(".side-scrolling-wrapper2 section", {
+            xPercent: -100 * (sections.length - 1),
+            ease: "none",
+            scrollTrigger: {
+            trigger: ".side-scrolling-wrapper2",
+            pin: true,
+            start: "top +=10px",
+            scrub: 1,
+            end: () => "+=" + (document.querySelector(".container").offsetWidth / 5)
+            }
+        });
+        
+        const container = document.querySelector(".wrap1 .container").offsetWidth / 5;
+        console.log("container : " + container);
+        console.log("xPercent : " + -100 * (sections.length - 1));
+        window.addEventListener('scroll', () => { 
+            let y = window.scrollY;
+            console.log(y);
+        })
+    </script>
 </body>
 </html>
