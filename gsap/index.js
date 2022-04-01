@@ -72,7 +72,7 @@ gsap.to(item2, {
   ease: "none",
   scrollTrigger: {
     trigger: ".slide",
-    pin: '.contents',
+    pin: '.slide__container',
     scrub: 0.5,
     markers: true,
     end: () => `+=${maxWidth}`,
@@ -82,6 +82,7 @@ item.forEach((sct, i) => {
   ScrollTrigger.create({
     trigger: sct,
     start: () => 'top top-=' + (sct.offsetLeft - window.innerWidth / 2) * (maxWidth / (maxWidth - window.innerWidth)),
+    // start: 'top top',
     end: () => '+=' + sct.offsetWidth * (maxWidth / (maxWidth - window.innerWidth)),
     toggleClass: { targets: sct, className: "active" } });
 
